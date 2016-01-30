@@ -2,7 +2,7 @@
 //  BillDataViewController.swift
 //  Partnercentage
 //
-//  Created by Raquel Ribeiro on 2016-01-30.
+//  Created by Glauber Martins on 2016-01-30.
 //  Copyright © 2016 Gizmoholic. All rights reserved.
 //
 

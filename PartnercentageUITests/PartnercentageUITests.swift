@@ -2,7 +2,7 @@
 //  PartnercentageUITests.swift
 //  PartnercentageUITests
 //
-//  Created by Raquel Ribeiro on 2016-01-29.
+//  Created by Glauber Martins on 2016-01-29.
 //  Copyright © 2016 Gizmoholic. All rights reserved.
 //
 

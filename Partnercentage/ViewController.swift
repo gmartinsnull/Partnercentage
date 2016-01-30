@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Partnercentage
 //
-//  Created by Raquel Ribeiro on 2016-01-29.
+//  Created by Glauber Martins on 2016-01-29.
 //  Copyright © 2016 Gizmoholic. All rights reserved.
 //
 
@@ -36,10 +36,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func btnOk(sender: AnyObject) {
-        txtASal = Int(txtPartnerASalary.text!)!
-        txtBSal = Int(txtPartnerBSalary.text!)!
-        
-        txtTotalIncome.text = "Total Income: "+String(txtASal+txtBSal)
+        /*txtASal = Int(txtPartnerASalary.text!)!
+        txtBSal = Int(txtPartnerBSalary.text!)!*/
         
     }
     

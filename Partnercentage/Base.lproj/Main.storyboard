@@ -164,7 +164,7 @@
                                 </variation>
                                 <connections>
                                     <action selector="btnOk:" destination="QYA-cA-RdS" eventType="touchUpInside" id="Ql1-lQ-BQN"/>
-                                    <segue destination="G5M-p3-v3w" kind="show" id="22a-Ux-zi8"/>
+                                    <segue destination="G5M-p3-v3w" kind="show" id="C8E-uL-qMt"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="%" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gvq-bK-7jy">

@@ -163,7 +163,7 @@
                                 </variation>
                                 <connections>
                                     <action selector="btnOk:" destination="QYA-cA-RdS" eventType="touchUpInside" id="Ql1-lQ-BQN"/>
-                                    <segue destination="G5M-p3-v3w" kind="show" id="C8E-uL-qMt"/>
+                                    <segue destination="G5M-p3-v3w" kind="show" identifier="sendPartnersData" id="C8E-uL-qMt"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="%" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gvq-bK-7jy">
@@ -605,8 +605,8 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ijA-go-DG1">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="Partner A:" id="T6i-h6-8vf"/>
-                                    <barButtonItem title="Partner B:" id="f7Z-CP-fYg"/>
+                                    <barButtonItem title="Partner A:" style="plain" id="T6i-h6-8vf"/>
+                                    <barButtonItem title="Partner B:" style="plain" id="f7Z-CP-fYg"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="iBm-PQ-ExZ"/>
                                     <barButtonItem title="Graphs" id="sva-lp-2g9"/>
                                 </items>
@@ -643,6 +643,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="AZb-3D-F9y" id="kaB-bJ-isN"/>
+                        <outlet property="txtPartnerAShare" destination="T6i-h6-8vf" id="bds-cB-KcT"/>
+                        <outlet property="txtPartnerBShare" destination="f7Z-CP-fYg" id="559-4a-FAD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vhK-M5-yLf" userLabel="First Responder" sceneMemberID="firstResponder"/>

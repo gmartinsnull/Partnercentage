@@ -12,11 +12,17 @@ import CoreData
 let appDel:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 let context:NSManagedObjectContext = appDel.managedObjectContext
 
-class BillsViewController: UIViewController, UITableViewDataSource {
+class BillsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var txtPartnerBShare: UIBarButtonItem!
+    @IBOutlet weak var txtPartnerAShare: UIBarButtonItem!
     
     var bills = [NSManagedObject]()
+    
+    var partnerAShare:Double = 0
+    var partnerBShare:Double = 0
+    var total = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +30,49 @@ class BillsViewController: UIViewController, UITableViewDataSource {
         self.navigationController?.navigationBarHidden = false
         
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
+        //let txt:String
+        //txt = String(partnerAShare)
+        
+        //FETCH BILLS FOR TABLEVIEW
+        do{
+            let request = NSFetchRequest(entityName: "Bills")
+            let results = try context.executeFetchRequest(request)
+            
+            bills = results as! [NSManagedObject]
+            
+            for item in results as! [NSManagedObject]{
+                let val = item.valueForKey("value") as? Int
+                total += val!
+            }
+            
+        }catch let error as NSError{
+            print("Could not save \(error), \(error.userInfo)")
+        }
+        
+        //CALCULATES THE AMOUNT FOR EACH PARTNER
+        //self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", partnerAShare)
+        self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", Double(partnerAShare)*Double(total))
+        self.txtPartnerBShare.title = "Partner B: $ "+String(format: "%.2f", Double(partnerBShare)*Double(total))
+        
+        //FETCH PARTNERS DATA
+        /*do{
+            let requestA = NSFetchRequest(entityName: "PartnerA")
+            let resultsA = try context.executeFetchRequest(requestA)
+            let requestB = NSFetchRequest(entityName: "PartnerB")
+            let resultsB = try context.executeFetchRequest(requestB)
+            
+            partnersA = resultsA as! [NSManagedObject]
+            
+        }catch let error as NSError{
+            print("Could not save \(error), \(error.userInfo)")
+        }
+        
+        
+        
+        //CHECKING BILLS
         do{
             
             //BILLS
@@ -48,24 +96,9 @@ class BillsViewController: UIViewController, UITableViewDataSource {
             }
         }catch let error as NSError{
             NSLog("Could not save \(error), \(error.userInfo)")
-        }
+        }*/
 
         // Do any additional setup after loading the view.
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        //FETCH BILLS FOR TABLEVIEW
-        do{
-            let request = NSFetchRequest(entityName: "Bills")
-            let results = try context.executeFetchRequest(request)
-            
-            bills = results as! [NSManagedObject]
-        }catch let error as NSError{
-            print("Could not save \(error), \(error.userInfo)")
-        }
-        
     }
     
     
@@ -80,7 +113,6 @@ class BillsViewController: UIViewController, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        NSLog("test")
         return bills.count
     }
     
@@ -95,34 +127,57 @@ class BillsViewController: UIViewController, UITableViewDataSource {
         
         cell!.textLabel!.text = cellTextName + cellTextValue + cellTextTax
         
-        print(bills[indexPath.row])
+        //print(bills[indexPath.row])
         
         return cell!
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        switch editingStyle{
+            case .Delete:
+                //UPDATES PARTNERS'S VALUES
+                //CALCULATES THE AMOUNT FOR EACH PARTNER
+                let bill = bills[indexPath.row]
+                print(bill.valueForKey("value")!.description)
+                total -= Int(bill.valueForKey("value")!.description)!
+                //self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", partnerAShare)
+                self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", Double(partnerAShare)*Double(total))
+                self.txtPartnerBShare.title = "Partner B: $ "+String(format: "%.2f", Double(partnerBShare)*Double(total))
+                
+                //REMOVE FROM DATA
+                context.deleteObject(bills[indexPath.row] as NSManagedObject)
+                bills.removeAtIndex(indexPath.row)
+                
+                do{
+                   try context.save()
+                }catch let error as NSError{
+                    NSLog("Could not save \(error), \(error.userInfo)")
+                }
+                
+                //REMOVE FROM TABLEVIEW
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            
+            default:
+                return
+        }
     }
     
     @IBAction func addBill(sender: AnyObject) {
         let alertController = UIAlertController(title: "New Bill", message: nil, preferredStyle: .Alert)
         
-        let ok = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){
+        let ok = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default){
             UIAlertAction in
             
             let nameTxtField = alertController.textFields![0] as UITextField
             let valueTxtField = alertController.textFields![1] as UITextField
-            let taxTxtField = alertController.textFields![2] as UITextField
+            //let taxTxtField = alertController.textFields![2] as UITextField
             
-            let newBill = NSEntityDescription.insertNewObjectForEntityForName("Bills", inManagedObjectContext: context)
-            
-            newBill.setValue(nameTxtField.text, forKey: "name")
-            newBill.setValue(Int(valueTxtField.text!)!, forKey: "value")
-            newBill.setValue(1, forKey: "tax")
-            //newBill.setValue(Int(taxTxtField.text!)!, forKey: "tax")
-            
-            do{
-                try context.save()
-                self.tableView?.reloadData()
-            }catch let error as NSError{
-                print("Could not save \(error), \(error.userInfo)")
-            }
+            self.saveBill(nameTxtField.text!, value: Int(valueTxtField.text!)!, tax: 1)
+            self.tableView.reloadData()
             
         }
         
@@ -138,20 +193,42 @@ class BillsViewController: UIViewController, UITableViewDataSource {
         }
         alertController.addTextFieldWithConfigurationHandler { (textField) in
             textField.placeholder = "Value"
-            textField.keyboardType = .PhonePad
+            
             NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidChangeNotification, object: textField, queue: NSOperationQueue.mainQueue()) { (notification) in
                 ok.enabled = textField.text != ""
             }
         }
         alertController.addTextFieldWithConfigurationHandler { (textField) in
             textField.placeholder = "Tax"
-            textField.keyboardType = .PhonePad
         }
         
         alertController.addAction(ok)
         alertController.addAction(cancel)
         
         self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func saveBill(name: String, value: Int, tax: Int){
+        let entityBill = NSEntityDescription.entityForName("Bills", inManagedObjectContext: context)
+        let newBill = NSManagedObject(entity: entityBill!, insertIntoManagedObjectContext: context)
+        
+        newBill.setValue(name, forKey: "name")
+        newBill.setValue(value, forKey: "value")
+        newBill.setValue(tax, forKey: "tax")
+        
+        do{
+            try context.save()
+            bills.append(newBill)
+            
+            //CALCULATES THE AMOUNT FOR EACH PARTNER
+            total += value
+            //self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", partnerAShare)
+            self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", Double(partnerAShare)*Double(total))
+            self.txtPartnerBShare.title = "Partner B: $ "+String(format: "%.2f", Double(partnerBShare)*Double(total))
+
+        }catch let error as NSError{
+            print("Could not save \(error), \(error.userInfo)")
+        }
     }
     
 

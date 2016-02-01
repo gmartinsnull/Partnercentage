@@ -17,6 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        /*let entityDescription = NSEntityDescription.entityForName("PartnerA", inManagedObjectContext: self.managedObjectContext)
+        let newPartner = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: self.managedObjectContext)
+        newPartner.setValue(300, forKey: "salary")
+        newPartner.setValue(1, forKey: "tax")
+        
+        do {
+            try newPartner.managedObjectContext?.save()
+        } catch {
+            print(error)
+        }*/
         return true
     }
 

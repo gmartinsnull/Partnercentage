@@ -15,8 +15,13 @@
 		2831565D1C5C4C890049B505 /* PartnercentageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831565C1C5C4C890049B505 /* PartnercentageTests.swift */; };
 		283156681C5C4C890049B505 /* PartnercentageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283156671C5C4C890049B505 /* PartnercentageUITests.swift */; };
 		2831567A1C5C70490049B505 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283156791C5C70490049B505 /* ViewController.swift */; };
-		283156801C5D5B330049B505 /* BillDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831567F1C5D5B330049B505 /* BillDataViewController.swift */; };
 		283156841C5D7E080049B505 /* BillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283156831C5D7E080049B505 /* BillsViewController.swift */; };
+		2831569E1C5D81690049B505 /* Bills+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283156981C5D81690049B505 /* Bills+CoreDataProperties.swift */; };
+		2831569F1C5D81690049B505 /* Bills.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283156991C5D81690049B505 /* Bills.swift */; };
+		283156A01C5D81690049B505 /* PartnerA+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831569A1C5D81690049B505 /* PartnerA+CoreDataProperties.swift */; };
+		283156A11C5D81690049B505 /* PartnerA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831569B1C5D81690049B505 /* PartnerA.swift */; };
+		283156A21C5D81690049B505 /* PartnerB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831569C1C5D81690049B505 /* PartnerB+CoreDataProperties.swift */; };
+		283156A31C5D81690049B505 /* PartnerB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831569D1C5D81690049B505 /* PartnerB.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,8 +56,13 @@
 		283156671C5C4C890049B505 /* PartnercentageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnercentageUITests.swift; sourceTree = "<group>"; };
 		283156691C5C4C890049B505 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		283156791C5C70490049B505 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2831567F1C5D5B330049B505 /* BillDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillDataViewController.swift; sourceTree = "<group>"; };
 		283156831C5D7E080049B505 /* BillsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillsViewController.swift; sourceTree = "<group>"; };
+		283156981C5D81690049B505 /* Bills+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Bills+CoreDataProperties.swift"; path = "../DB/Bills+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		283156991C5D81690049B505 /* Bills.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bills.swift; path = ../DB/Bills.swift; sourceTree = "<group>"; };
+		2831569A1C5D81690049B505 /* PartnerA+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PartnerA+CoreDataProperties.swift"; path = "../DB/PartnerA+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2831569B1C5D81690049B505 /* PartnerA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PartnerA.swift; path = ../DB/PartnerA.swift; sourceTree = "<group>"; };
+		2831569C1C5D81690049B505 /* PartnerB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PartnerB+CoreDataProperties.swift"; path = "../DB/PartnerB+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2831569D1C5D81690049B505 /* PartnerB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PartnerB.swift; path = ../DB/PartnerB.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +113,10 @@
 		283156431C5C4C890049B505 /* Partnercentage */ = {
 			isa = PBXGroup;
 			children = (
+				283156971C5D81500049B505 /* DB */,
 				283156441C5C4C890049B505 /* AppDelegate.swift */,
 				283156791C5C70490049B505 /* ViewController.swift */,
 				283156831C5D7E080049B505 /* BillsViewController.swift */,
-				2831567F1C5D5B330049B505 /* BillDataViewController.swift */,
 				283156481C5C4C890049B505 /* Main.storyboard */,
 				2831564E1C5C4C890049B505 /* Assets.xcassets */,
 				283156501C5C4C890049B505 /* LaunchScreen.storyboard */,
@@ -132,6 +142,19 @@
 				283156691C5C4C890049B505 /* Info.plist */,
 			);
 			path = PartnercentageUITests;
+			sourceTree = "<group>";
+		};
+		283156971C5D81500049B505 /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				283156981C5D81690049B505 /* Bills+CoreDataProperties.swift */,
+				283156991C5D81690049B505 /* Bills.swift */,
+				2831569A1C5D81690049B505 /* PartnerA+CoreDataProperties.swift */,
+				2831569B1C5D81690049B505 /* PartnerA.swift */,
+				2831569C1C5D81690049B505 /* PartnerB+CoreDataProperties.swift */,
+				2831569D1C5D81690049B505 /* PartnerB.swift */,
+			);
+			name = DB;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +225,7 @@
 				TargetAttributes = {
 					283156401C5C4C890049B505 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = F46UB4EEC8;
 					};
 					283156571C5C4C890049B505 = {
 						CreatedOnToolsVersion = 7.2;
@@ -265,11 +289,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2831569E1C5D81690049B505 /* Bills+CoreDataProperties.swift in Sources */,
 				2831567A1C5C70490049B505 /* ViewController.swift in Sources */,
-				283156801C5D5B330049B505 /* BillDataViewController.swift in Sources */,
+				2831569F1C5D81690049B505 /* Bills.swift in Sources */,
+				283156A31C5D81690049B505 /* PartnerB.swift in Sources */,
+				283156A01C5D81690049B505 /* PartnerA+CoreDataProperties.swift in Sources */,
 				283156841C5D7E080049B505 /* BillsViewController.swift in Sources */,
 				283156451C5C4C890049B505 /* AppDelegate.swift in Sources */,
+				283156A11C5D81690049B505 /* PartnerA.swift in Sources */,
 				2831564D1C5C4C890049B505 /* Partnercentage.xcdatamodeld in Sources */,
+				283156A21C5D81690049B505 /* PartnerB+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,10 +440,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Partnercentage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gizmoholic.Partnercentage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -422,10 +457,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Partnercentage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gizmoholic.Partnercentage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

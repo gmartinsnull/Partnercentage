@@ -23,6 +23,9 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
     var partnerAShare:Double = 0
     var partnerBShare:Double = 0
     var total = 0
+    var totalInc = 0
+    
+    var billsData:[Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +35,6 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        //let txt:String
-        //txt = String(partnerAShare)
         
         //FETCH BILLS FOR TABLEVIEW
         do{
@@ -46,6 +46,9 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
             for item in results as! [NSManagedObject]{
                 let val = item.valueForKey("value") as? Int
                 total += val!
+                
+                //FILL IN BILLSDATA TO BE SENT CHARTVIEW
+                billsData.append(val!)
             }
             
         }catch let error as NSError{
@@ -54,51 +57,9 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         //CALCULATES THE AMOUNT FOR EACH PARTNER
         //self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", partnerAShare)
-        self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", Double(partnerAShare)*Double(total))
-        self.txtPartnerBShare.title = "Partner B: $ "+String(format: "%.2f", Double(partnerBShare)*Double(total))
-        
-        //FETCH PARTNERS DATA
-        /*do{
-            let requestA = NSFetchRequest(entityName: "PartnerA")
-            let resultsA = try context.executeFetchRequest(requestA)
-            let requestB = NSFetchRequest(entityName: "PartnerB")
-            let resultsB = try context.executeFetchRequest(requestB)
-            
-            partnersA = resultsA as! [NSManagedObject]
-            
-        }catch let error as NSError{
-            print("Could not save \(error), \(error.userInfo)")
-        }
-        
-        
-        
-        //CHECKING BILLS
-        do{
-            
-            //BILLS
-            let request = NSFetchRequest(entityName: "Bills")
-            let results = try context.executeFetchRequest(request)
-            
-            if results.count > 0 {
-                
-                for items in results as! [NSManagedObject]{
-                    let name = items.valueForKey("name")
-                    let val = items.valueForKey("value")
-                    let tax = items.valueForKey("tax")
-                    
-                    print(name!, val!, tax!)
-                }
-                NSLog("bills / if")
-                //print(resultsA)
-            }else{
-                
-                NSLog("bills / else")
-            }
-        }catch let error as NSError{
-            NSLog("Could not save \(error), \(error.userInfo)")
-        }*/
+        self.txtPartnerAShare.title = "A: $ "+String(format: "%.2f", Double(partnerAShare)*Double(total))
+        self.txtPartnerBShare.title = "B: $ "+String(format: "%.2f", Double(partnerBShare)*Double(total))
 
-        // Do any additional setup after loading the view.
     }
     
     
@@ -122,11 +83,12 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
         let bill = bills[indexPath.row]
         
         let cellTextName = (bill.valueForKey("name") as? String)! + " | $ "
-        let cellTextValue = bill.valueForKey("value")!.description + " | "
-        let cellTextTax = bill.valueForKey("tax")!.description + " %"
+        let cellTextValue = bill.valueForKey("value")!.description
+        //let cellTextTax = " | " + bill.valueForKey("tax")!.description + " %"
         
-        cell!.textLabel!.text = cellTextName + cellTextValue + cellTextTax
-        
+        cell!.textLabel!.text = cellTextName + cellTextValue
+        cell?.backgroundColor = UIColor(red: 120/255.0, green: 230/255.0, blue: 255.0, alpha: 1.0)
+        cell?.textLabel?.textColor = UIColor.whiteColor()
         //print(bills[indexPath.row])
         
         return cell!
@@ -142,11 +104,11 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 //UPDATES PARTNERS'S VALUES
                 //CALCULATES THE AMOUNT FOR EACH PARTNER
                 let bill = bills[indexPath.row]
-                print(bill.valueForKey("value")!.description)
+                //print(bill.valueForKey("value")!.description)
                 total -= Int(bill.valueForKey("value")!.description)!
                 //self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", partnerAShare)
-                self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", Double(partnerAShare)*Double(total))
-                self.txtPartnerBShare.title = "Partner B: $ "+String(format: "%.2f", Double(partnerBShare)*Double(total))
+                self.txtPartnerAShare.title = "A: $ "+String(format: "%.2f", Double(partnerAShare)*Double(total))
+                self.txtPartnerBShare.title = "B: $ "+String(format: "%.2f", Double(partnerBShare)*Double(total))
                 
                 //REMOVE FROM DATA
                 context.deleteObject(bills[indexPath.row] as NSManagedObject)
@@ -198,9 +160,9 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 ok.enabled = textField.text != ""
             }
         }
-        alertController.addTextFieldWithConfigurationHandler { (textField) in
+        /*alertController.addTextFieldWithConfigurationHandler { (textField) in
             textField.placeholder = "Tax"
-        }
+        }*/
         
         alertController.addAction(ok)
         alertController.addAction(cancel)
@@ -220,11 +182,14 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
             try context.save()
             bills.append(newBill)
             
+            //FILL IN BILLSDATA TO BE SENT CHARTVIEW
+            billsData.append(value)
+            
             //CALCULATES THE AMOUNT FOR EACH PARTNER
             total += value
             //self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", partnerAShare)
-            self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", Double(partnerAShare)*Double(total))
-            self.txtPartnerBShare.title = "Partner B: $ "+String(format: "%.2f", Double(partnerBShare)*Double(total))
+            self.txtPartnerAShare.title = "A: $ "+String(format: "%.2f", Double(partnerAShare)*Double(total))
+            self.txtPartnerBShare.title = "B: $ "+String(format: "%.2f", Double(partnerBShare)*Double(total))
 
         }catch let error as NSError{
             print("Could not save \(error), \(error.userInfo)")
@@ -232,14 +197,21 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "chartDataSegue" {
+            if let destination = segue.destinationViewController as? ChartsViewController {
+                destination.costSum = total
+                destination.total = totalInc
+                destination.chartData = billsData
+            }
+        }
+        
     }
-    */
 
 }

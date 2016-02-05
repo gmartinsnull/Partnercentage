@@ -22,6 +22,8 @@
 		283156A11C5D81690049B505 /* PartnerA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831569B1C5D81690049B505 /* PartnerA.swift */; };
 		283156A21C5D81690049B505 /* PartnerB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831569C1C5D81690049B505 /* PartnerB+CoreDataProperties.swift */; };
 		283156A31C5D81690049B505 /* PartnerB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831569D1C5D81690049B505 /* PartnerB.swift */; };
+		28F322D31C61A98700EC9373 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F322D21C61A98700EC9373 /* ChartsViewController.swift */; };
+		28F322E81C61BAAE00EC9373 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F322E71C61BAAE00EC9373 /* LineChartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		2831569B1C5D81690049B505 /* PartnerA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PartnerA.swift; path = ../DB/PartnerA.swift; sourceTree = "<group>"; };
 		2831569C1C5D81690049B505 /* PartnerB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PartnerB+CoreDataProperties.swift"; path = "../DB/PartnerB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2831569D1C5D81690049B505 /* PartnerB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PartnerB.swift; path = ../DB/PartnerB.swift; sourceTree = "<group>"; };
+		28F322D21C61A98700EC9373 /* ChartsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
+		28F322E71C61BAAE00EC9373 /* LineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,8 @@
 				283156441C5C4C890049B505 /* AppDelegate.swift */,
 				283156791C5C70490049B505 /* ViewController.swift */,
 				283156831C5D7E080049B505 /* BillsViewController.swift */,
+				28F322D21C61A98700EC9373 /* ChartsViewController.swift */,
+				28F322E71C61BAAE00EC9373 /* LineChartView.swift */,
 				283156481C5C4C890049B505 /* Main.storyboard */,
 				2831564E1C5C4C890049B505 /* Assets.xcassets */,
 				283156501C5C4C890049B505 /* LaunchScreen.storyboard */,
@@ -290,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2831569E1C5D81690049B505 /* Bills+CoreDataProperties.swift in Sources */,
+				28F322D31C61A98700EC9373 /* ChartsViewController.swift in Sources */,
 				2831567A1C5C70490049B505 /* ViewController.swift in Sources */,
 				2831569F1C5D81690049B505 /* Bills.swift in Sources */,
 				283156A31C5D81690049B505 /* PartnerB.swift in Sources */,
@@ -299,6 +306,7 @@
 				283156A11C5D81690049B505 /* PartnerA.swift in Sources */,
 				2831564D1C5C4C890049B505 /* Partnercentage.xcdatamodeld in Sources */,
 				283156A21C5D81690049B505 /* PartnerB+CoreDataProperties.swift in Sources */,
+				28F322E81C61BAAE00EC9373 /* LineChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

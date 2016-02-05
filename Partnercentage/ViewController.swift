@@ -16,6 +16,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtPartnerBSalary: UITextField!
     @IBOutlet weak var txtPartnerBTax: UITextField!
     @IBOutlet weak var txtTotalIncome: UILabel!
+    @IBOutlet weak var btnOk: UIButton!
+    @IBOutlet weak var partnerALabel: UILabel!
+    @IBOutlet weak var partnerBLabel: UILabel!
+    @IBOutlet weak var salaryALabel: UILabel!
+    @IBOutlet weak var salaryBLabel: UILabel!
     
     var partASal:Int = 0, partBSal:Int = 0, partATax:Int = 0, partBTax:Int = 0, totalIncome:Int = 0
     
@@ -27,6 +32,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         txtPartnerBSalary.delegate = self
         txtPartnerASalary.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         txtPartnerBSalary.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        
+        //CIRCLE BUTTON
+        btnOk.layer.cornerRadius = 0.5 * btnOk.bounds.size.width
         
         
         txtPartnerASalary.text = defaults.stringForKey("partnerASalary")
@@ -48,11 +56,70 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         
         self.navigationController?.navigationBarHidden = true
+        
+
+        //BUTTON ANIMATION
+        rotateButton()
+        
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
+        //ANIMATION
+        partnerALabel.alpha = 0
+        salaryALabel.center.x -= view.bounds.width
+        txtPartnerASalary.center.x -= view.bounds.width
+        partnerBLabel.alpha = 0
+        salaryBLabel.center.x += view.bounds.width
+        txtPartnerBSalary.center.x += view.bounds.width
+        
+
+        
+        //ANIMATIONS
+        UIView.animateWithDuration(1.0, animations: {
+            //self.partnerALabel.center.x += self.view.bounds.width
+            self.salaryALabel.center.x += self.view.bounds.width
+            self.txtPartnerASalary.center.x += self.view.bounds.width
+            //self.partnerBLabel.center.x -= self.view.bounds.width
+            self.salaryBLabel.center.x -= self.view.bounds.width
+            self.txtPartnerBSalary.center.x -= self.view.bounds.width
+        })
+        
+        
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        //ANIMATIONS
+        UIView.animateWithDuration(1.0, delay: 1.0, options: [], animations: {
+            self.partnerALabel.alpha = 1.0
+            self.partnerBLabel.alpha = 1.0
+            }, completion: nil)
+    }
+    
+    func rotateButton(){
+        UIView.animateWithDuration(2.0, delay: 1.0, options: [], animations: { () -> Void in
+            self.btnOk.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+            self.btnOk.center.y += self.view.bounds.height
+            }, completion:nil)
+        UIView.animateWithDuration(2.0, delay: 1.0, options: [], animations: { () -> Void in
+            self.btnOk.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 2))
+            }, completion:nil)
+        UIView.animateWithDuration(2.0, delay: 1.0, options: [], animations: { () -> Void in
+            self.btnOk.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+            }, completion:nil)
+        UIView.animateWithDuration(2.0, delay: 1.0, options: [], animations: { () -> Void in
+            self.btnOk.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 2))
+            }, completion:nil)
+        UIView.animateWithDuration(2.0, delay: 1.0, options: [], animations: { () -> Void in
+            self.btnOk.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+            }, completion:nil)
+        UIView.animateWithDuration(2.0, delay: 1.0, options: [], animations: { () -> Void in
+            self.btnOk.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 2))
+            }, completion:nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,14 +150,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         let saveError = error as NSError
                         print(saveError)
                     }
-                    /*NSLog("if")
-                    for itemsA in resultsA as! [NSManagedObject]{
-                        let sal = itemsA.valueForKey("salary")
-                        let tax = itemsA.valueForKey("tax")
-                        
-                        print(sal!, tax!)
-                    }*/
-                    //print(resultsA)
                 }else{
                     let newPartner = NSEntityDescription.insertNewObjectForEntityForName("PartnerA", inManagedObjectContext: context)
                     newPartner.setValue(Int(txtPartnerASalary.text!)!, forKey: "salary")
@@ -115,14 +174,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         let saveError = error as NSError
                         print(saveError)
                     }
-                    /*NSLog("if")
-                    for itemsB in resultsB as! [NSManagedObject]{
-                        let sal = itemsB.valueForKey("salary")
-                        let tax = itemsB.valueForKey("tax")
-                        
-                        print(sal!, tax!)
-                    }*/
-                    //print(resultsA)
                 }else{
                     let newPartner = NSEntityDescription.insertNewObjectForEntityForName("PartnerB", inManagedObjectContext: context)
                     newPartner.setValue(Int(txtPartnerBSalary.text!)!, forKey: "salary")
@@ -130,7 +181,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     
                     try context.save()
                     
-                    //NSLog("else")
                 }
             }catch let error as NSError{
                 NSLog("Could not save \(error), \(error.userInfo)")
@@ -146,38 +196,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         defaults.setObject(txtPartnerBSalary.text, forKey: "partnerBSalary")
         defaults.setObject(txtPartnerBTax.text, forKey: "partnerBTax")
         defaults.setObject(txtTotalIncome.text, forKey: "total")
-        
-        
-        
-        /*
-        //INSERTING
-        do{
-            try context.save()
-        }catch let error as NSError{
-            NSLog("Could not save \(error), \(error.userInfo)")
-        }
-        
-        //FETCHING
-        do{
-            let request = NSFetchRequest(entityName: "PartnerA")
-            let result = try context.executeFetchRequest(request)
-            
-            if result.count > 0{
-                for item in result as! [NSManagedObject]{
-                    let sal = item.valueForKey("salary")
-                    let tax = item.valueForKey("tax")
-                    
-                    print(sal!, tax!)
-                }
-            }
-            
-        }catch let error as NSError{
-            NSLog("Could not save \(error), \(error.userInfo)")
-        }*/
-        
-        //let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        //print("Possible sqlite file: \(urls)")
-        
         
     }
     
@@ -204,25 +222,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "sendPartnersData" {
+        if segue.identifier == "partnersDataSegue" {
             if let destination = segue.destinationViewController as? BillsViewController {
                 let partAShare = Double(Double(partASal)/Double(totalIncome))
                 let partBShare = Double(Double(partBSal)/Double(totalIncome))
                 destination.partnerAShare = partAShare
                 destination.partnerBShare = partBShare
+                destination.totalInc = totalIncome
             }
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

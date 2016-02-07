@@ -129,7 +129,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func btnOk(sender: AnyObject) {
         
-        if txtPartnerASalary.text != "" || txtPartnerBSalary.text != "" {
+        if txtPartnerASalary.text != "" && txtPartnerBSalary.text != "" {
             let appDel:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let context:NSManagedObjectContext = appDel.managedObjectContext
             
@@ -182,20 +182,25 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     try context.save()
                     
                 }
+                
+                //SET USER DEFAULTS
+                
+                defaults.setObject(txtPartnerASalary.text, forKey: "partnerASalary")
+                defaults.setObject(txtPartnerATax.text, forKey: "partnerATax")
+                defaults.setObject(txtPartnerBSalary.text, forKey: "partnerBSalary")
+                defaults.setObject(txtPartnerBTax.text, forKey: "partnerBTax")
+                defaults.setObject(txtTotalIncome.text, forKey: "total")
+                
             }catch let error as NSError{
                 NSLog("Could not save \(error), \(error.userInfo)")
             }
         }else{
-            
+            let alert = UIAlertController(title: "Blank Fields", message: "Please fill all fields out!", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
-        //SET USER DEFAULTS
         
-        defaults.setObject(txtPartnerASalary.text, forKey: "partnerASalary")
-        defaults.setObject(txtPartnerATax.text, forKey: "partnerATax")
-        defaults.setObject(txtPartnerBSalary.text, forKey: "partnerBSalary")
-        defaults.setObject(txtPartnerBTax.text, forKey: "partnerBTax")
-        defaults.setObject(txtTotalIncome.text, forKey: "total")
         
     }
     
@@ -231,6 +236,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 destination.totalInc = totalIncome
             }
         }
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == "partnersDataSegue" {
+            if txtPartnerASalary.text != "" && txtPartnerBSalary.text != "" {
+                return true
+            }else{
+                return false
+            }
+        }
+        return true
     }
 
 }

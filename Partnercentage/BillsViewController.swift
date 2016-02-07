@@ -26,6 +26,7 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
     var totalInc = 0
     
     var billsData:[Int] = []
+    var subtitlesData:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +50,10 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 
                 //FILL IN BILLSDATA TO BE SENT CHARTVIEW
                 billsData.append(val!)
+                
+                //FILL IN SUBTITLESDATA TO BE SENT TO CHARTVIEW
+                let name = item.valueForKey("name") as? String
+                subtitlesData.append(name!)
             }
             
         }catch let error as NSError{
@@ -110,9 +115,15 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 self.txtPartnerAShare.title = "A: $ "+String(format: "%.2f", Double(partnerAShare)*Double(total))
                 self.txtPartnerBShare.title = "B: $ "+String(format: "%.2f", Double(partnerBShare)*Double(total))
                 
-                //REMOVE FROM DATA
+                //REMOVE FROM CORE DATA
                 context.deleteObject(bills[indexPath.row] as NSManagedObject)
                 bills.removeAtIndex(indexPath.row)
+                
+                //REMOVE FROM BILLSDATA ARRAY
+                billsData.removeAtIndex(indexPath.row)
+                
+                //REMOVE STRINGS FROM SUBTITLESDATA ARRAY
+                subtitlesData.removeAtIndex(indexPath.row)
                 
                 do{
                    try context.save()
@@ -138,8 +149,13 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
             let valueTxtField = alertController.textFields![1] as UITextField
             //let taxTxtField = alertController.textFields![2] as UITextField
             
-            self.saveBill(nameTxtField.text!, value: Int(valueTxtField.text!)!, tax: 1)
-            self.tableView.reloadData()
+            if (self.total + Int(valueTxtField.text!)! > self.totalInc) {
+                self.alertBigValue()
+            }else{
+                //SAVES NEW BILL IN CORE DATA
+                self.saveBill(nameTxtField.text!, value: Int(valueTxtField.text!)!, tax: 1)
+                self.tableView.reloadData()
+            }
             
         }
         
@@ -155,6 +171,7 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         alertController.addTextFieldWithConfigurationHandler { (textField) in
             textField.placeholder = "Value"
+            textField.keyboardType = UIKeyboardType.DecimalPad
             
             NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidChangeNotification, object: textField, queue: NSOperationQueue.mainQueue()) { (notification) in
                 ok.enabled = textField.text != ""
@@ -185,6 +202,9 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
             //FILL IN BILLSDATA TO BE SENT CHARTVIEW
             billsData.append(value)
             
+            //FILL IN SUBTITLESDATA TO BE SENT TO CHARTVIEW
+            self.subtitlesData.append(name)
+            
             //CALCULATES THE AMOUNT FOR EACH PARTNER
             total += value
             //self.txtPartnerAShare.title = "Partner A: $ "+String(format: "%.2f", partnerAShare)
@@ -194,6 +214,12 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
         }catch let error as NSError{
             print("Could not save \(error), \(error.userInfo)")
         }
+    }
+    
+    func alertBigValue(){
+        let alert = UIAlertController(title: "Ouch!", message: "Total value of bills will exceed total income!", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
 
@@ -209,6 +235,8 @@ class BillsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 destination.costSum = total
                 destination.total = totalInc
                 destination.chartData = billsData
+                destination.chartLabels = subtitlesData
+                //print(bills.count)
             }
         }
         

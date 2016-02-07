@@ -9,7 +9,7 @@
 import UIKit
 //import CoreData
 
-var totalIncomeInit = 5000
+var totalIncomeLineInit = 5000
 var chartPointsInit:[Int] = [0]
 
 @IBDesignable class LineChartView: UIView {
@@ -25,7 +25,7 @@ var chartPointsInit:[Int] = [0]
     //CHANGE TOTAL INCOME FROM CHARTSVIEWCONTROLLER
     @IBInspectable var totalIncome: Int = 5000 {
         didSet {
-            if totalIncomeInit != totalIncome{
+            if totalIncomeLineInit != totalIncome{
                 //REFRESH VIEW
                 setNeedsDisplay()
             }

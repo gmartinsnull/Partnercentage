@@ -31,6 +31,127 @@ class PartnercentageUITests: XCTestCase {
     func testExample() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        
+    }
+    
+    func testAppWalkThrough(){
+        
+        let app = XCUIApplication()
+        app.buttons["Ok"].tap()
+        
+        let billsNavigationBar = app.navigationBars["Bills"]
+        billsNavigationBar.buttons["Add"].tap()
+        
+        app.alerts["New Bill"].collectionViews.buttons["Cancel"].tap()
+        app.toolbars.buttons["Charts"].tap()
+        app.buttons["6 Months"].tap()
+        app.buttons["1 Year"].tap()
+        
+        let element = app.otherElements.containingType(.NavigationBar, identifier:"Partnercentage.ChartsView").childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).elementBoundByIndex(1)
+        element.childrenMatchingType(.Other).elementBoundByIndex(0).tap()
+        element.childrenMatchingType(.Other).elementBoundByIndex(1).tap()
+        app.navigationBars["Partnercentage.ChartsView"].buttons["Bills"].tap()
+        billsNavigationBar.childrenMatchingType(.Button).matchingIdentifier("Back").elementBoundByIndex(0).tap()
+        
+        
+    }
+    
+    func testCreateAndDeleteNewEntry(){
+        
+        let app = XCUIApplication()
+        let element3 = app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element
+        let textField = element3.childrenMatchingType(.Other).elementBoundByIndex(1).textFields["$"]
+        textField.tap()
+        
+        
+        let deleteKey = app.keys["Delete"]
+        deleteKey.tap()
+        deleteKey.tap()
+        deleteKey.tap()
+        deleteKey.tap()
+
+        textField.typeText("1500")
+        
+        let textField2 = element3.childrenMatchingType(.Other).elementBoundByIndex(2).textFields["$"]
+        textField2.tap()
+        deleteKey.tap()
+        
+        deleteKey.tap()
+        deleteKey.tap()
+        deleteKey.tap()
+        
+        textField2.typeText("2000")
+        
+        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).elementBoundByIndex(1).tap()
+        
+        
+        app.staticTexts["PARTNER B"].tap()
+        
+        app.buttons["Ok"].tap()
+        
+        let billsNavigationBar = app.navigationBars["Bills"]
+        let addButton = billsNavigationBar.buttons["Add"]
+        addButton.tap()
+        
+        let newBillAlert = app.alerts["New Bill"]
+        let collectionViewsQuery = newBillAlert.collectionViews
+        let nameTextField = collectionViewsQuery.textFields["Name"]
+        nameTextField.tap()
+        nameTextField.typeText("aaa")
+        
+        let valueTextField = collectionViewsQuery.textFields["Value"]
+        valueTextField.tap()
+        valueTextField.tap()
+        valueTextField.typeText("200")
+        
+        let saveButton = collectionViewsQuery.buttons["Save"]
+        saveButton.tap()
+        addButton.tap()
+        nameTextField.tap()
+        nameTextField.typeText("bbb")
+        valueTextField.tap()
+        valueTextField.tap()
+        valueTextField.typeText("700")
+        saveButton.tap()
+        addButton.tap()
+        newBillAlert.tap()
+        nameTextField.typeText("ccc")
+        valueTextField.tap()
+        valueTextField.tap()
+        valueTextField.typeText("450")
+        saveButton.tap()
+        addButton.tap()
+        nameTextField.typeText("ddd")
+        valueTextField.tap()
+        valueTextField.tap()
+        valueTextField.typeText("350")
+        saveButton.tap()
+        
+        let chartsButton = app.toolbars.buttons["Charts"]
+        chartsButton.tap()
+        
+        let element4 = app.otherElements.containingType(.NavigationBar, identifier:"Partnercentage.ChartsView").childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).elementBoundByIndex(1)
+        let element = element4.childrenMatchingType(.Other).elementBoundByIndex(0)
+        element.tap()
+        
+        let element2 = element4.childrenMatchingType(.Other).elementBoundByIndex(1)
+        element2.tap()
+        
+        let billsButton = app.navigationBars["Partnercentage.ChartsView"].buttons["Bills"]
+        billsButton.tap()
+        
+        let tablesQuery = app.tables
+        tablesQuery.staticTexts["ddd | $ 350"].swipeLeft()
+        tablesQuery.buttons["Delete"].tap()
+        chartsButton.tap()
+        element.tap()
+        element2.tap()
+        billsButton.tap()
+        billsNavigationBar.childrenMatchingType(.Button).matchingIdentifier("Back").elementBoundByIndex(0).tap()
+        
+        
+        
     }
     
 }
